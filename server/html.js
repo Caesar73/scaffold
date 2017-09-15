@@ -8,10 +8,9 @@
 
 const fs   = require('fs')
 const path = require('path')
-
-const ejs  = require('ejs')
 const glob = require( 'glob' );
 const del  = require('del');
+const cons = require('consolidate')
 
 const src = path.join(__dirname, './page');
 
@@ -62,25 +61,34 @@ glob( src + '/**/*.ejs', function( err, files ) {
       }
 
       let mockPath = src + '' + fileName + '.mock'
+      let viewPath = src + '' + fileName + '.ejs'
           fileName = __dirname + '/html' + fileName + '.html';
       console.log('fileName: ' + fileName);
 
       // console.log(data);
 
-      const mock   = require(mockPath)
-      let html     = ejs.render(data, mock);
-      const w_data = new Buffer(html);
+      const mock = require(mockPath)
+      cons.ejs(viewPath, mock)
+        .then(function (html) {
+          console.log('html: ' + html);
+          const w_data = new Buffer(html);
 
-      // delete files before write new files
-      del([fileName]).then(paths => {
-        fs.writeFile(fileName, w_data, {flag: 'a'}, function (err) {
-           if(err) {
-            console.error(err);
-            } else {
-               console.log('写入' + fileName + '成功');
-            }
+          // delete files before write new files
+          del([fileName]).then(paths => {
+            fs.writeFile(fileName, w_data, {flag: 'a'}, function (err) {
+               if(err) {
+                console.error(err);
+                } else {
+                   console.log('写入' + fileName + '成功');
+                }
+            });
+          });
+
+        })
+        .catch(function (err) {
+          throw err;
         });
-      });
+
 
     });
 
