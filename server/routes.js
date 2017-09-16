@@ -30,22 +30,6 @@ module.exports = function(app) {
 module.exports = function (app) {
   Router.use('/index', index.routes(), index.allowedMethods())
   Router.use('/user',  user.routes(),  user.allowedMethods())
-/*
-  Router.get('/test', async ( ctx ) => {
-    let title = 'test'
-    await ctx.render('index', {
-      title,
-    })
-  })
-
-  Router.get('/test', async ( ctx ) => {
-    let title = 'test'
-    await ctx.render('index', {
-      title: title
-    })
-  })
-
-*/
 
   Router.get('/test', async ( ctx ) => {
     let title = 'test'
