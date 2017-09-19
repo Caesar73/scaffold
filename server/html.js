@@ -62,7 +62,9 @@ glob( src + '/**/*.ejs', function( err, files ) {
 
       let mockPath = src + '' + fileName + '.mock'
       let viewPath = src + '' + fileName + '.ejs'
-          fileName = __dirname + '/html' + fileName + '.html';
+      let fileName2 = __dirname + '/html' + fileName + '.ejs';
+          fileName  = __dirname + '/html' + fileName + '.html';
+
       console.log('fileName: ' + fileName);
 
       // console.log(data);
@@ -83,6 +85,16 @@ glob( src + '/**/*.ejs', function( err, files ) {
                 }
             });
           });
+
+          // del([fileName2]).then(paths => {
+          //   fs.writeFile(fileName2, w_data, {flag: 'a'}, function (err) {
+          //      if(err) {
+          //       console.error(err);
+          //       } else {
+          //          console.log('写入' + fileName2 + '成功');
+          //       }
+          //   });
+          // });
 
         })
         .catch(function (err) {

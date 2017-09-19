@@ -32,7 +32,7 @@ app.use(xtpl({
 
  */
 
-app.use(views(path.join(__dirname, './page'), { extension: 'ejs' }))
+app.use(views(path.join(__dirname, './'), { extension: 'ejs' }))
 // console.log(config.viewDir);
 
 // 初始化数据
@@ -45,7 +45,52 @@ app.use(views(path.join(__dirname, './page'), { extension: 'ejs' }))
 //router use : this.logger.error('msg')
 app.use(async (ctx, next) => {
   ctx.logger = logger
-  await next()
+  let stts = ctx.status;
+  console.log('log stts: ' + stts);
+
+    try {
+      await next();
+    }
+    catch (err) {
+      ctx.status = err.status || 500;
+      stts = ctx.status;
+      console.log('hehehehe');
+      console.log('log stts: ' + stts);
+      if (stts == '404') {
+        ctx.render('page/index/404', {
+           title: '404'
+        })
+      }
+
+      if (stts == '500') {
+        ctx.render('page/index/404', {
+           title: '500'
+        })
+      }
+
+      ctx.body = err.message;
+      // ctx.body = '出错啦！';
+      ctx.app.emit('error', err, ctx);
+    }
+
+/*
+
+  if (stts == '404') {
+    console.log('hehehehe');
+    await ctx.render('page/index/404', {
+       title: '404'
+    })
+  }
+  else {
+
+
+
+  }
+
+ */
+
+
+
 })
 
 //错误处理中间件
@@ -55,6 +100,9 @@ require('./routes')(app)
 
 //错误监听
 app.on('error',(err,ctx)=>{
+  // let stts = ctx.status;
+  // console.log('stts: ' + stts);
+
   if (process.env.NODE_ENV != 'test') {
     console.error('error', err)
   }

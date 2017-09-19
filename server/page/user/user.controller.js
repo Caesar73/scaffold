@@ -7,7 +7,8 @@ const config  = require('../../config/env')
 const mock    = require('./user.mock')
 
 exports.getMe = async ( ctx ) => {
-  await ctx.render('user/user', mock)
+  ctx.status = 200
+  await ctx.render('page/user/user', mock)
 }
 
 /**

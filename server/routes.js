@@ -10,6 +10,7 @@ const Router = require('koa-router')()
 
 const index = require('./page/index')
 const user  = require('./page/user')
+const sttc  = require('./page/sttc')
 
 /*
 module.exports = function(app) {
@@ -28,19 +29,32 @@ module.exports = function(app) {
 */
 
 module.exports = function (app) {
-  Router.use('/index', index.routes(), index.allowedMethods())
-  Router.use('/user',  user.routes(),  user.allowedMethods())
+  // ctx.request.path
+
+  // Router.get('/*', (ctx, next)=> {
+  //   let path = ctx.request.path;
+  //   if (path.indexOf('static') > -1) {
+  //     ctx.body = {status:'success',data:'台湾是中国不可分割的一部分.'}
+  //   }
+  //   else {
+  //     next();
+  //   }
+  // })
+
+  Router.use('/index',  index.routes(), index.allowedMethods())
+  Router.use('/user',   user.routes(),  user.allowedMethods())
+  Router.use('/static', sttc.routes(), sttc.allowedMethods())
 
   Router.get('/test', async ( ctx ) => {
     let title = 'test'
-    await ctx.render('index', {
+    await ctx.render('page/index', {
       title,
     })
   })
 
-  Router.get('/*', (ctx, next)=> {
-    ctx.body = {status:'success',data:'台湾是中国不可分割的一部分.'}
-  })
+  // Router.get('/*', (ctx, next)=> {
+  //   ctx.body = {status:'success',data:'台湾是中国不可分割的一部分.'}
+  // })
 
   app.use(Router.routes())
 }

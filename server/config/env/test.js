@@ -10,9 +10,9 @@ module.exports = {
     db: 2,
     dropBufferSupport: true
   },
-  port:    process.env.PORT || 8080,
+  port:    process.env.PORT || 9010,
   seedDB: false,
   session:{
     cookie:  {maxAge: 60000*5}
-  }  
+  }
 }
