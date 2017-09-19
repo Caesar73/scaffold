@@ -1,3 +1,9 @@
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
 'use strict'
 
 const _ = require('lodash')
@@ -196,7 +202,7 @@ exports.getFrontArticleList = async (ctx,next)=>{
 	if(ctx.query.tagId){
 		//tagId = new mongoose.Types.ObjectId(tagId)
 		const tagId = String(ctx.query.tagId)
-		condition = _.defaults(condition,{ tags: { $elemMatch: { $eq:tagId } } })		
+		condition = _.defaults(condition,{ tags: { $elemMatch: { $eq:tagId } } })
 	}
 	try{
 		const list = await Article.find(condition)
@@ -294,7 +300,7 @@ exports.toggleLike = async (ctx,next)=>{
 	const _ctx = ctx
 	const aid = new mongoose.Types.ObjectId(_ctx.params.id)
   const userId = _ctx.req.user._id
-  //如果已经喜欢过了,则从喜欢列表里,去掉文章ID,并减少文章喜欢数.否则添加到喜欢列表,并增加文章喜欢数.	
+  //如果已经喜欢过了,则从喜欢列表里,去掉文章ID,并减少文章喜欢数.否则添加到喜欢列表,并增加文章喜欢数.
   //var isLink = _.indexOf(req.user.likeList.toString(), req.params.id)
   const isLike = _.findIndex(_ctx.req.user.likeList, function(item) {
     return item.toString() == _ctx.params.id

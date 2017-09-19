@@ -1,3 +1,9 @@
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
 /**
  * 标签表
  */
@@ -11,7 +17,7 @@ let TagSchema = new Schema({
 	name:{						//标签名称
 		type:String,
 		unique: true
-	},	
+	},
 	cid:{
 		type:Schema.Types.ObjectId,
 		ref:'TagCategory'

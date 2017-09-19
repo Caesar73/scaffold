@@ -1,4 +1,10 @@
-/** 
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
+/**
  * 用户表
  */
 'use strict'
@@ -148,7 +154,7 @@ UserSchema
 		},
 		message: '这个呢称已经被使用!',
 	})
-		
+
 UserSchema
 	.path('email')
 	.validate({

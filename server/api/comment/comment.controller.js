@@ -1,3 +1,9 @@
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
 'use strict'
 
 const _ = require('lodash')
@@ -74,7 +80,7 @@ exports.addNewReply = async (ctx,next)=>{
   try{
   	const result = await Comment.findByIdAndUpdate(cid,{'$push':{'replys':reply}},{new:true})
 		ctx.status = 200
-		ctx.body = {success:true,data:result.replys}  	
+		ctx.body = {success:true,data:result.replys}
   }catch(err){
   	ctx.throw(err)
   }
@@ -84,7 +90,7 @@ exports.delComment = async (ctx,next)=>{
 	const cid = ctx.params.id
 	try{
 		const result = await Comment.findByIdAndRemove(cid)
-		//评论数-1  
+		//评论数-1
 		Blog.findByIdAndUpdate(result.aid,{$inc:{comment_count:-1}}).exec()
 		ctx.status = 200
 		ctx.body = {success:true}

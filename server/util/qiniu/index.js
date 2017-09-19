@@ -1,3 +1,9 @@
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
 'use strict'
 
 const config = require('../../config/env')
@@ -134,7 +140,7 @@ exports.list = function(options){
 				const commonPrefixes = respBody.commonPrefixes
 				respBody.items.forEach(function(item) {
 					item.url = config.qiniu.domain + item.key
-				})				
+				})
         resolve(respBody)
       } else {
         reject(new Error('error status' + respInfo.statusCode))

@@ -1,3 +1,9 @@
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
 /**
  * 评论表
  */
@@ -25,7 +31,7 @@ let CommentSchema = new Schema({
 	status:{		//0,删除,1,正常
 		type:Number,
 		default:1
-	},		
+	},
 	created: {
 		type: Date,
 		default: Date.now

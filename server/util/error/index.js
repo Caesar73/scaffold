@@ -1,3 +1,9 @@
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
 const _ = require('lodash')
 
 const errorHandleMiddle = function () {

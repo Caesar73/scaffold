@@ -1,0 +1,23 @@
+{
+  "name": "scaffold",
+  "dependencies": {
+    "zepto": "*",
+    "ejs": "*",
+    "lodash": "^4.17.4",
+    "pure": "*"
+  },
+  "homepage": "https://github.com/Caesar73/scaffold",
+  "authors": [
+    "张嘉毅 <jiayizhang@tianler.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

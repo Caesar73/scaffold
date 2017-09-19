@@ -1,4 +1,10 @@
-/** 
+/*
+ * @author: Caesar
+ * @module:
+ *
+ */
+
+/**
  * 文章表
  */
 'use strict'
