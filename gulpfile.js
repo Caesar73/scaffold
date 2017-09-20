@@ -105,8 +105,10 @@ gulp.task('clean:img', function() {
 
 gulp.task('less', function(){
   return gulp.src(paths.less)
+    .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(minifyCSS())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('client/dist/css'))
 });
 
@@ -128,6 +130,8 @@ gulp.task('babel', ['clean:lib'], function() {
       presets: ['es2015']
     }))
     .pipe(gulp.dest('client/dist/lib'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('client/dist/lib'))
 });
 // 编译Require加载库
 gulp.task('amd', ['clean:js'], function () {
@@ -137,9 +141,10 @@ gulp.task('amd', ['clean:js'], function () {
     .pipe(sourcemaps.init())
     .pipe(amdOptimize(mrl, amdConfig))
     .pipe(concat('index.js'))
-    .pipe(sourcemaps.write('./', { includeContent: false, sourceRoot: '../src' }))
-    .pipe(gulp.dest('client/dist/js'));
-
+    .pipe(minify())
+    .pipe(gulp.dest('client/dist/js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('client/dist/js'))
 });
 
 
