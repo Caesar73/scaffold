@@ -4,7 +4,8 @@
     "zepto": "*",
     "ejs": "*",
     "lodash": "^4.17.4",
-    "pure": "*"
+    "pure": "*",
+    "requirejs": "*"
   },
   "homepage": "https://github.com/Caesar73/scaffold",
   "authors": [

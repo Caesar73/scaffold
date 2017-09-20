@@ -12,6 +12,8 @@ const minifyCSS = require('gulp-csso');
 const imagemin  = require('gulp-imagemin');
 
 const amdOptimize = require("amd-optimize");
+// const amdOptimize = require('gulp-amd-optimizer');
+const minify = require('gulp-minify');
 const babel  = require('gulp-babel');
 const jshint = require('gulp-jshint')
 
@@ -26,6 +28,51 @@ const paths = {
   js: 'client/static/js/**/*.js',
   img: 'client/static/img/**/*'
 };
+
+
+const amdConfig = {
+  baseUrl: "client/static/js",
+  paths  : {
+    "underscore": "lib/src/underscore.min",
+    "backbone"  : "lib/src/backbone.min",
+    "jquery"    : "lib/src/jquery-1.11.3.min",
+
+    "config" : "lib/config/config",
+    "app"    : "webapp/app", // *模块入口
+    "lib"    : "lib/main",
+
+  }
+  // ,
+  // shim   : {
+  //     backbone: {
+  //         'deps': ['jquery', 'underscore'],
+  //         'exports': 'Backbone'
+  //     },
+  //     underscore: {
+  //         'exports': '_'
+  //     }
+  // }
+}
+
+
+const wechatAmdConfig = {
+  baseUrl: "client/static/js",
+  paths  : {
+    "underscore": "lib/src/underscore.min",
+    "backbone"  : "lib/src/backbone.min",
+    "jquery"    : "lib/src/jquery-1.11.3.min",
+
+    "config" : "lib/config/config",
+    "app"    : "webapp/app", // *模块入口
+    "lib"    : "lib/main",
+
+  }
+}
+
+
+const amdOptions = {
+  umd: false
+}
 
 
 // Not all tasks need to use streams
@@ -45,6 +92,10 @@ gulp.task('clean:sass', function() {
 gulp.task('clean:js', function() {
   // You can use multiple globbing patterns as you would with `gulp.src`
   return del(['client/dist/js']);
+});
+gulp.task('clean:lib', function() {
+  // You can use multiple globbing patterns as you would with `gulp.src`
+  return del(['client/dist/lib']);
 });
 gulp.task('clean:img', function() {
   // You can use multiple globbing patterns as you would with `gulp.src`
@@ -69,14 +120,26 @@ gulp.task('img', ['clean:img'], function() {
 });
 
 
-gulp.task('babel', ['clean:js'], function() {
+gulp.task('babel', ['clean:lib'], function() {
   return gulp.src(paths.babel)
     .pipe(jshint())
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(gulp.dest('client/dist/js'))
+    .pipe(gulp.dest('client/dist/lib'))
+});
+// 编译Require加载库
+gulp.task('amd', ['clean:js'], function () {
+  let url = amdConfig.baseUrl + '/webapp/**/*.js';
+  let mrl = 'webapp/main';
+  return gulp.src(url)
+    .pipe(sourcemaps.init())
+    .pipe(amdOptimize(mrl, amdConfig))
+    .pipe(concat('index.js'))
+    .pipe(sourcemaps.write('./', { includeContent: false, sourceRoot: '../src' }))
+    .pipe(gulp.dest('client/dist/js'));
+
 });
 
 
@@ -90,14 +153,3 @@ gulp.task('watch', function() {
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['watch', 'babel', 'img']);
 
-/*
-
-        .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ['env']
-        }))
-        .pipe(concat('all.js'))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist'))
-
- */

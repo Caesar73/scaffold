@@ -1,0 +1,9 @@
+<li class="pure-g adv">
+<% for (var i = 0;i < model.giftbagList.length;i++) { %>
+    <div class="pure-u-1 pure-u-md-1-3 giftbag" data-id="<%= model.giftbagList[i].id %>">
+        <a class="ad" href="#giftbag/detail/<%= model.giftbagList[i].id %>">
+            <strong><%= model.giftbagList[i].title %></strong>
+        </a>
+    </div>
+<% } %>
+</li>

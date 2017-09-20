@@ -1,0 +1,13 @@
+<div class="pure-g adv">
+<% for (var i = 0;i < model.goodsList.length;i++) { %>
+    <div class="pure-u-1 pure-u-md-1-3 giftbag" data-id="<%= model.goodsList[i].id %>">
+        <a class="ad" href="#goods/detail/<%= model.goodsList[i].id %>">
+            <strong><%= model.goodsList[i].title %></strong>
+        </a>
+    </div>
+<% } %>
+</div>
+
+<a href="#close/main" class="close" data-target="main">
+    <span>&larr;</span>
+</a>
